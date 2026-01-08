@@ -7,8 +7,12 @@ import { SITE_CONFIG } from '@/lib/constants';
 export default function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-comic-yellow/30 via-comic-cream to-comic-blue/20" />
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/images/generated/hero-banner.png)' }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-comic-yellow/70 via-comic-cream/80 to-comic-blue/60" />
       <div className="absolute inset-0 halftone-overlay" />
 
       {/* Comic Burst Decorations */}

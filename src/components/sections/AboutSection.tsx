@@ -42,18 +42,16 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="relative"
           >
-            {/* Placeholder Profile Image */}
+            {/* Comic Collection Image */}
             <div className="relative aspect-square max-w-md mx-auto">
               <div className="absolute inset-0 bg-comic-yellow border-4 border-black shadow-comic-lg transform rotate-3" />
               <div className="absolute inset-0 bg-comic-red border-4 border-black shadow-comic transform -rotate-3" />
-              <div className="relative bg-gradient-to-br from-gray-200 to-gray-300 border-4 border-black aspect-square flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <svg className="w-24 h-24 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span className="font-comic text-xl">TONY</span>
-                  <p className="text-sm mt-1">Photo Coming Soon</p>
-                </div>
+              <div className="relative border-4 border-black aspect-square overflow-hidden">
+                <img
+                  src="/images/generated/comic-collection.png"
+                  alt="Comic book collection"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 

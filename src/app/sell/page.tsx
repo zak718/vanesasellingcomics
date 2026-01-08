@@ -84,7 +84,12 @@ export default function SellPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-comic-yellow via-comic-cream to-comic-blue/20 overflow-hidden">
+      <section className="relative py-20 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/images/generated/we-buy-comics.png)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-comic-yellow/80 via-comic-cream/85 to-comic-blue/70" />
         <div className="absolute inset-0 halftone-overlay" />
 
         {/* Comic Bursts */}

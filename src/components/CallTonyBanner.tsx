@@ -36,13 +36,17 @@ export default function CallTonyBanner({ variant = 'inline' }: CallTonyBannerPro
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-comic-red text-white px-6 py-4 border-4 border-black shadow-comic-lg font-comic text-xl uppercase hover:bg-red-600 transition-colors"
+        className="fixed bottom-6 right-6 z-50 hidden sm:flex items-center gap-3 bg-comic-red text-white px-6 py-4 border-4 border-black shadow-comic-lg font-comic text-xl uppercase hover:bg-red-600 transition-colors"
       >
         <div className="relative">
-          <Phone size={28} />
+          <img
+            src="/images/generated/call-tony.png"
+            alt="Call"
+            className="w-12 h-12 object-contain"
+          />
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-comic-yellow rounded-full animate-ping" />
         </div>
-        <div className="hidden sm:block">
+        <div>
           <div className="text-sm">Call Tony!</div>
           <div className="font-bold">{SITE_CONFIG.phoneDisplay}</div>
         </div>

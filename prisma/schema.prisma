@@ -1,0 +1,121 @@
+// VanesaSellingComics Database Schema
+// Prisma schema for comic repricing tool
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// Admin user for dashboard access
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // hashed with bcrypt
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Comics being tracked (Tony's inventory)
+model Comic {
+  id              String        @id @default(cuid())
+  title           String        // e.g., "Amazing Spider-Man #300"
+  issue           String?       // Issue number
+  publisher       String?       // Marvel, DC, etc.
+  year            Int?          // Publication year
+  condition       String?       // NM, VF, etc.
+  graded          Boolean       @default(false)
+  gradingCompany  String?       // CGC, CBCS
+  grade           Float?        // 9.8, 9.6, etc.
+  notes           String?
+  imageUrl        String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relationships
+  listings        EbayListing[]
+  priceAlerts     PriceAlert[]
+}
+
+// Tony's active eBay listings
+model EbayListing {
+  id              String    @id @default(cuid())
+  ebayItemId      String    @unique  // eBay's item ID
+  comicId         String?
+  comic           Comic?    @relation(fields: [comicId], references: [id])
+  title           String
+  currentPrice    Float
+  listingType     String    @default("fixed") // fixed, auction
+  quantity        Int       @default(1)
+  listingUrl      String?
+  imageUrl        String?
+  status          String    @default("active") // active, sold, ended
+  listedAt        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  priceAlerts     PriceAlert[]
+}
+
+// Sold listings from eBay (market data)
+model SoldListing {
+  id              String    @id @default(cuid())
+  ebayItemId      String?
+  title           String
+  searchQuery     String    // What we searched for
+  soldPrice       Float
+  shippingPrice   Float?
+  totalPrice      Float?    // soldPrice + shipping
+  condition       String?
+  soldDate        DateTime?
+  sellerName      String?
+  listingUrl      String?
+  imageUrl        String?
+  createdAt       DateTime  @default(now())
+
+  // Relationships
+  priceAlerts     PriceAlert[]
+}
+
+// Price alerts when sold items are cheaper than listings
+model PriceAlert {
+  id              String       @id @default(cuid())
+  listingId       String
+  listing         EbayListing  @relation(fields: [listingId], references: [id])
+  soldListingId   String?
+  soldListing     SoldListing? @relation(fields: [soldListingId], references: [id])
+  comicId         String?
+  comic           Comic?       @relation(fields: [comicId], references: [id])
+
+  currentPrice    Float        // Tony's current price
+  soldPrice       Float        // Market sold price
+  priceDiff       Float        // How much cheaper
+  percentDiff     Float        // Percentage difference
+
+  suggestedPrice  Float?       // AI suggested new price
+  newPrice        Float?       // Tony's confirmed new price
+
+  status          String       @default("pending") // pending, confirmed, dismissed, applied
+  confirmedAt     DateTime?
+  appliedAt       DateTime?    // When price was updated on eBay
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+// Scan job history
+model ScanJob {
+  id            String   @id @default(cuid())
+  status        String   @default("pending") // pending, running, completed, failed
+  listingsFound Int      @default(0)
+  alertsCreated Int      @default(0)
+  startedAt     DateTime?
+  completedAt   DateTime?
+  error         String?
+  createdAt     DateTime @default(now())
+}
