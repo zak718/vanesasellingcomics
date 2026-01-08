@@ -8,7 +8,7 @@ const mockUsers: Map<string, { id: string; email: string; password: string; name
 mockUsers.set('tony@vanesasellingcomics.com', {
   id: 'user-1',
   email: 'tony@vanesasellingcomics.com',
-  password: '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X4.G5uUQ/HrFkWy2y', // "admin123"
+  password: '$2b$12$aUJpSA/ICIjC7zzIHf74MOM93mM27HNB1lP2cfjFPTRwhWN8GIGn.', // "admin123"
   name: 'Tony',
   role: 'admin',
 });

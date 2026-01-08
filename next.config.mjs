@@ -2,7 +2,7 @@
 const nextConfig = {
   // Removed static export to support API routes for admin panel
   // For production, run: npm run build && npm start
-  trailingSlash: true,
+  // Note: trailingSlash removed to fix API route issues
   images: {
     unoptimized: true,
   },
